@@ -43,7 +43,7 @@ After writing your documentation, you simply require this script. Then all comma
 require_relative "easyoptions"
 
 # Boolean options
-puts "Option specified: --option"        if $options[:option]
+puts "Option specified: --some-option"   if $options[:some_option]
 puts "Option specified: --some-boolean"  if $options[:some_boolean]
 
 # Parameter option
