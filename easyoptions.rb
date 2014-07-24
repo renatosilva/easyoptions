@@ -2,7 +2,7 @@
 # Encoding: ISO-8859-1
 
 ##
-##     EasyOptions 2014.7.9
+##     EasyOptions 2014.7.23
 ##     Copyright (c) 2013, 2014 Renato Silva
 ##     GNU GPLv2 licensed
 ##
@@ -59,7 +59,7 @@
 ## the options into Ruby variables, evaluable export statements will be
 ## generated for corresponding Bash environment variables. For example:
 ##
-##     eval "$(from="$0" @script.name "$@")" || exit 1
+##     eval "$(from="$0" @script.name "$@" || echo exit 1)"
 ##
 ## If the script containing this command is documented as in the example above,
 ## and it is executed from command line with the -o and --some-value=10 options,
