@@ -2,7 +2,7 @@
 # Encoding: ISO-8859-1
 
 ##
-##     EasyOptions 2014.7.23
+##     EasyOptions 2014.8.3
 ##     Copyright (c) 2013, 2014 Renato Silva
 ##     GNU GPLv2 licensed
 ##
@@ -168,7 +168,7 @@ arguments.each_with_index do |argument, index|
         # Option with value in next parameter
         elsif known_option.in?(argument) and not known_option.boolean then
             value = arguments[index + 1]
-            finish("you must specify a value for #{known_option}") if not value
+            finish("you must specify a value for #{known_option}") if not value or value.start_with?("-")
             value = value.to_i if value =~ /^[0-9]+$/
             $options[known_option.long] = value
             unknown_option = false
