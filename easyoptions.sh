@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##
-##     EasyOptions 2014.7.9
+##     EasyOptions 2014.9.11
 ##     Copyright (c) 2013 Renato Silva
 ##     GNU GPLv2 licensed
 ##
@@ -129,14 +129,14 @@ parse_options() {
             if [[ "$option" = "$known_option_name" ]]; then
                 option_value="yes"
                 known_option_var=$(echo "$known_option_var" | tr "-" "_")
-                eval "export $known_option_var=\"$option_value\""
+                eval "$known_option_var=\"$option_value\""
                 break
 
             # Long option
             elif [[ "$option" = -$known_option_name && "$known_option_var" != "?" ]]; then
                 option_value="yes"
                 known_option_var=$(echo "$known_option_var" | tr "-" "_")
-                eval "export $known_option_var=\"$option_value\""
+                eval "$known_option_var=\"$option_value\""
                 break
 
             # Long option with value in next parameter
@@ -148,14 +148,14 @@ parse_options() {
                 fi
                 OPTIND=$((OPTIND + 1))
                 known_option_var=$(echo "$known_option_name" | tr "-" "_")
-                eval "export $known_option_var=\"$option_value\""
+                eval "$known_option_var=\"$option_value\""
                 break
 
             # Long option with value after equal sign
             elif [[ "$option" = -$known_option_name=* && "$known_option_var" = "?" ]]; then
                 option_value=${option#*=}
                 known_option_var=$(echo "$known_option_name" | tr "-" "_")
-                eval "export $known_option_var=\"$option_value\""
+                eval "$known_option_var=\"$option_value\""
                 break
 
             # Long option with unnecessary value
@@ -199,7 +199,6 @@ parse_options() {
         fi
         shift
     done
-    export arguments options
 }
 
 parse_options "$@"

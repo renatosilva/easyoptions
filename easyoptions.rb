@@ -2,7 +2,7 @@
 # Encoding: ISO-8859-1
 
 ##
-##     EasyOptions 2014.8.3
+##     EasyOptions 2014.9.11
 ##     Copyright (c) 2013, 2014 Renato Silva
 ##     GNU GPLv2 licensed
 ##
@@ -56,8 +56,8 @@
 ## This script can be used from Bash scripts as well. If the $from environment
 ## variable is set, that will be assumed as the source Bash script from which to
 ## parse the documentation and the provided options. Then, instead of parsing
-## the options into Ruby variables, evaluable export statements will be
-## generated for corresponding Bash environment variables. For example:
+## the options into Ruby variables, evaluable assignment statements will be
+## generated for the corresponding Bash environment variables. For example:
 ##
 ##     eval "$(from="$0" @script.name "$@" || echo exit 1)"
 ##
@@ -65,11 +65,11 @@
 ## and it is executed from command line with the -o and --some-value=10 options,
 ## and one regular argument abc, then the evaluable output would look like this:
 ##
-##     export option="yes"
-##     export some_value="10"
+##     option="yes"
+##     some_value="10"
 ##     unset arguments
 ##     arguments+=("abc")
-##     export arguments
+##     arguments
 ##
 
 class Option
@@ -221,11 +221,10 @@ end
 # Bash support
 if BashOutput then
     $options.keys.each do |name|
-        puts "export #{name}=\"#{$options[name].to_s.sub("true", "yes")}\""
+        puts "#{name}=\"#{$options[name].to_s.sub("true", "yes")}\""
     end
     puts "unset arguments"
     $arguments.each do |argument|
         puts "arguments+=(\"#{argument}\")"
     end
-    puts "export arguments"
 end

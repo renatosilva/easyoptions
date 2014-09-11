@@ -86,7 +86,7 @@ options=(o=option some-boolean some-value=?)
 
 ### Ruby version in Bash
 
-The Ruby version can be used from Bash scripts as well since it is faster. If the `$from` environment variable is set, that will be assumed as the source Bash script from which to parse the documentation and the provided options. Then, instead of parsing the options into Ruby variables, evaluable export statements will be generated for corresponding Bash environment variables. Instead of sourcing the Bash script we call the Ruby version, for example:
+The Ruby version can be used from Bash scripts as well since it is faster. If the `$from` environment variable is set, that will be assumed as the source Bash script from which to parse the documentation and the provided options. Then, instead of parsing the options into Ruby variables, evaluable assignment statements will be generated for corresponding Bash environment variables. Instead of sourcing the Bash script we call the Ruby version, for example:
 
 ```bash
 eval "$(from="$0" easyoptions.rb "$@" || echo exit 1)"
@@ -95,11 +95,10 @@ eval "$(from="$0" easyoptions.rb "$@" || echo exit 1)"
 If the script containing this command is documented as in the example above, and it is executed from command line with the `-o` and `--some-value=10` options, and one regular argument `foo`, then the evaluable output would look like this:
 
 ```bash
-export some_option="yes"
-export some_value="10"
+some_option="yes"
+some_value="10"
 unset arguments
 arguments+=("foo")
-export arguments
 ```
 
 ## Contributing
