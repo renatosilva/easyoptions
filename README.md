@@ -35,7 +35,7 @@ For using EasyOptions in your script, simply document it using double-hash comme
 
 The above comments work both as source code documentation and as help text, as well as define the options supported by your script. There is no duplication of the options specification. The string `@script.name` will be replaced with the actual script name. Now you only need to call EasyOptions in your script and *that's it*!
 
-### Ruby version
+### For Ruby
 
 After writing your documentation, you simply require this script. Then all command line options will get parsed into the `$options` hash, as described above. You can then check their values for reacting to them. All regular arguments will get stored into the `$arguments` array. Here is an example for parsing the comments above:
 
@@ -60,12 +60,12 @@ $arguments.each do |argument|
 end
 ```
 
-### Bash version
+### For Bash
 
-After writing your documentation, you simply source this script. Then all command line options will get parsed into the corresponding variables. You can then check their values for reacting to them. Regular arguments will be available in the `$arguments` array. Here is an example for parsing the comments above:
+After writing your documentation, you simply source this script. Then all command line options will get parsed into the corresponding variables. You can then check their values for reacting to them. Regular arguments will be available in the `$arguments` array. You can source either `easyoptions` for a front end to the faster Ruby implementation, or `easyoptions.sh` for a pure Bash implementation. Here is an example for parsing the comments above:
 
 ```bash
-source easyoptions "$@" || exit
+source easyoptions || exit
 
 # Boolean and parameter options
 [[ -n "$some_option"  ]] && echo "Option specified: --some-option"
@@ -78,36 +78,21 @@ for argument in "${arguments[@]}"; do
 done
 ```
 
-For better speed, you may want to define the options in source code yourself, so they do not need to be parsed from the documentation. The side effect is that when changing them, you will need to update both the documentation and the source code. You define the options statically like this:
+If using the pure Bash implementation, then for better speed you may want to define the options in source code yourself, so they do not need to be parsed from the documentation. The side effect is that when changing them, you will need to update both the documentation and the source code. You define the options statically like this:
 
 ```bash
 options=(o=option some-boolean some-value=?)
 ```
 
-### Ruby version in Bash
-
-The Ruby version can be used from Bash scripts as well since it is faster. If the `$from` environment variable is set, that will be assumed as the source Bash script from which to parse the documentation and the provided options. Then, instead of parsing the options into Ruby variables, evaluable assignment statements will be generated for corresponding Bash environment variables. Instead of sourcing the Bash script we call the Ruby version, for example:
-
-```bash
-eval "$(from="$0" easyoptions.rb "$@" || echo exit 1)"
-```
-
-If the script containing this command is documented as in the example above, and it is executed from command line with the `-o` and `--some-value=10` options, and one regular argument `foo`, then the evaluable output would look like this:
-
-```bash
-some_option="yes"
-some_value="10"
-unset arguments
-arguments+=("foo")
-```
-
 ## Contributing
 
-The principle behind EasyOptions can be applied in other scripting languages and possibly static ones. If you would like to contribute, a Python port would be very welcome, as well as Java or C versions. Unit tests are also welcome. Or you can just improve the existing code with your ideas and bug fixes and help making option parsing suck a bit less!
+The principle behind EasyOptions can be applied in other scripting languages and possibly static ones. If you would like to contribute, below are some enhancements that would be welcome. You can also check the list of issues and contribute a patch.
+
+* A Python implementation.
+* A C implementation.
+* Unit tests.
 
 ## License and copyright
 
 Copyright (c) 2014 Renato Silva.
 Licensed under the terms of the GNU GPL version 2.
-
-
