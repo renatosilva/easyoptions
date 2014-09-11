@@ -115,6 +115,32 @@ parse_options() {
         fi
     done
 
+    # Extract regular arguments
+    index=1
+    parameters=()
+    for argument in "$@"; do
+        if [[ "$argument" = -* ]]; then
+            parameters+=("$argument")
+            for known_option in "${options[@]}"; do
+                known_option_var=${known_option#*=}
+                known_option_name=${known_option%=$known_option_var}
+                if [[ "$known_option_var" = "?" && "$argument" = --$known_option_name ]]; then
+                    next_is_value="yes"
+                    break
+                fi
+            done
+        else
+            if [[ -z "$next_is_value" ]]; then
+                arguments+=("${!index}")
+            else
+                parameters+=("$argument")
+            fi
+            next_is_value=""
+        fi
+        index=$((index + 1))
+    done
+    set -- "${parameters[@]}"
+
     # Parse the provided options
     while getopts ":${short_options}-:" option; do
         option="${option}${OPTARG}"
@@ -180,24 +206,6 @@ parse_options() {
             echo "$documentation"
             exit
         fi
-    done
-
-    # Detect regular arguments
-    for argument in "$@"; do
-        if [[ "$argument" = -* ]]; then
-            for known_option in "${options[@]}"; do
-                known_option_var=${known_option#*=}
-                known_option_name=${known_option%=$known_option_var}
-                if [[ "$known_option_var" = "?" && "$argument" = --$known_option_name ]]; then
-                    next_is_value="yes"
-                    break
-                fi
-            done
-        else
-            [[ -z "$next_is_value" ]] && arguments+=("$1")
-            next_is_value=""
-        fi
-        shift
     done
 }
 
