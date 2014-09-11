@@ -20,11 +20,8 @@
 ##                             used instead. Short version is not available in this
 ##                             format.
 
-# Bash version
-source easyoptions.sh "$@" || exit
-
-# Ruby version (faster)
-# eval "$(from="$0" ./easyoptions.rb "$@" || echo exit 1)"
+  source easyoptions    || exit # Ruby implementation
+# source easyoptions.sh || exit # Bash implementation, slower
 
 # Boolean and parameter options
 [[ -n "$some_option"  ]] && echo "Option specified: --some-option"
