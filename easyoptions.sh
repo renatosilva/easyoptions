@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##
-##     EasyOptions 2014.9.11
+##     EasyOptions 2014.9.15
 ##     Copyright (c) 2013 Renato Silva
 ##     GNU GPLv2 licensed
 ##
@@ -187,7 +187,7 @@ parse_options() {
             # Long option with unnecessary value
             elif [[ "$option" = -$known_option_name=* && "$known_option_var" != "?" ]]; then
                 option_value=${option#*=}
-                show_error "--$known_option_name does not accept a value, you specified \`$option_value'"
+                show_error "--$known_option_name does not accept a value, you specified \"$option_value\""
                 exit 1
             fi
         done

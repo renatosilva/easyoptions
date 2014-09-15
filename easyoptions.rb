@@ -2,7 +2,7 @@
 # Encoding: ISO-8859-1
 
 ##
-##     EasyOptions 2014.9.11
+##     EasyOptions 2014.9.15
 ##     Copyright (c) 2013, 2014 Renato Silva
 ##     GNU GPLv2 licensed
 ##
@@ -185,12 +185,12 @@ arguments.each_with_index do |argument, index|
         # Long option with unnecessary value
         elsif known_option.in_with_value?(argument) and known_option.boolean then
             value = argument.split("=")[1]
-            finish("#{known_option} does not accept a value (you specified `#{value}')")
+            finish("#{known_option} does not accept a value (you specified \"#{value}\")")
         end
     end
 
     # Unrecognized option
-    finish("unrecognized option `#{argument}'") if unknown_option and argument.start_with?("-")
+    finish("unrecognized option \"#{argument}\"") if unknown_option and argument.start_with?("-")
 end
 
 # Help option
