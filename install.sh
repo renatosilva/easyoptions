@@ -1,13 +1,15 @@
 #!/bin/bash
 
 from=$(dirname "$0")
+where="${1:-/usr/local/bin}"
+mkdir -p "$where" || exit
 
 if [[ "$1" != --remove ]]; then
-    cp -v "$from/easyoptions"    /usr/local/bin
-    cp -v "$from/easyoptions.sh" /usr/local/bin
-    cp -v "$from/easyoptions.rb" /usr/local/bin
+    cp -v "$from/easyoptions"     "$where"
+    cp -v "$from/easyoptions.sh"  "$where"
+    cp -v "$from/easyoptions.rb"  "$where"
 else
-    rm -vf /usr/local/bin/easyoptions
-    rm -vf /usr/local/bin/easyoptions.sh
-    rm -vf /usr/local/bin/easyoptions.rb
+    rm -vf "$where/easyoptions"
+    rm -vf "$where/easyoptions.sh"
+    rm -vf "$where/easyoptions.rb"
 fi
