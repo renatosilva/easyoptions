@@ -37,10 +37,14 @@ The above comments work both as source code documentation and as help text, as w
 
 ### For Ruby
 
+```
+gem install easyoptions
+```
+
 After writing your documentation, you simply require this script. Then all command line options will get parsed into the `$options` hash, as described above. You can then check their values for reacting to them. All regular arguments will get stored into the `$arguments` array. Here is an example for parsing the comments above:
 
 ```ruby
-require_relative "easyoptions"
+require "easyoptions"
 
 # Boolean options
 puts "Option specified: --some-option"   if $options[:some_option]
