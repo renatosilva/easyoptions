@@ -53,6 +53,10 @@
 ## message either because you are reading the source code, or you have called
 ## the script in command line with the --help option.
 ##
+##     Note: the options and arguments are also available as global variables in
+##     current version, but their use is discouraged and is supposed to be
+##     eventually removed.
+##
 ## This script can be used from Bash scripts as well. If the $from environment
 ## variable is set, that will be assumed as the source Bash script from which to
 ## parse the documentation and the provided options. Then, instead of parsing
