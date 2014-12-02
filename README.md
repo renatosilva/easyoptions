@@ -41,25 +41,26 @@ The above comments work both as source code documentation and as help text, as w
 gem install easyoptions
 ```
 
-After writing your documentation, you simply require this script. Then all command line options will get parsed into the `$options` hash, as described above. You can then check their values for reacting to them. All regular arguments will get stored into the `$arguments` array. Here is an example for parsing the comments above:
+After writing your documentation, you simply require this script. Then all command line options will get parsed into the `EasyOptions.options` hash, as described above. You can then check their values for reacting to them. All regular arguments will get stored into the `EasyOptions.arguments` array. Both the options and arguments can be accessed at once with `EasyOptions.all`. Here is an example for parsing the comments above:
 
 ```ruby
 require "easyoptions"
+options, arguments = EasyOptions.all
 
 # Boolean options
-puts "Option specified: --some-option"   if $options[:some_option]
-puts "Option specified: --some-boolean"  if $options[:some_boolean]
+puts "Option specified: --some-option"   if options[:some_option]
+puts "Option specified: --some-boolean"  if options[:some_boolean]
 
 # Parameter option
-value = $options[:some_value]
+value = options[:some_value]
 if value
     type = value.is_a?(Fixnum)? "number" : "string"
     puts "Option specified: --some-value is #{value} (a #{type})"
 end
 
 # Arguments
-exit if $arguments.empty?
-$arguments.each do |argument|
+exit if arguments.empty?
+arguments.each do |argument|
     puts "Argument specified: #{argument}"
 end
 ```

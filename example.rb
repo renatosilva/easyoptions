@@ -22,20 +22,20 @@
 ##                             format.
 
 require_relative "easyoptions"
+options, arguments = EasyOptions.all
 
 # Boolean options
-puts "Option specified: --some-option"  if $options[:option]
-puts "Option specified: --some-boolean" if $options[:some_boolean]
+puts "Option specified: --some-option"  if options[:option]
+puts "Option specified: --some-boolean" if options[:some_boolean]
 
 # Parameter option
-value = $options[:some_value]
+value = options[:some_value]
 if value
-    value = $options[:some_value]
     type = value.is_a?(Fixnum)? "number" : "string"
     puts "Option specified: --some-value is #{value} (a #{type})"
 end
 
 # Arguments
-$arguments.each do |argument|
+arguments.each do |argument|
     puts "Argument specified: #{argument}"
 end
