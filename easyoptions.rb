@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: ISO-8859-1
+# Encoding: UTF-8
 
 ##
 ##     EasyOptions 2014.12.2
