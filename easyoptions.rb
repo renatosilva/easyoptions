@@ -122,7 +122,7 @@ module EasyOptions
             doc = doc.find_all do |line|
                 line =~ /^##[^#]*/
             end
-            doc = doc.map do |line|
+            doc.map do |line|
                 line.strip!
                 line.sub!(/^## ?/, '')
                 line.gsub!(/@script.name/, File.basename($PROGRAM_NAME))
@@ -135,12 +135,12 @@ module EasyOptions
             @documentation.map do |line|
                 line = line.strip
                 case line
-                    when /^-h, --help.*/ then next
-                    when /^--help, -h.*/ then next
-                    when /^-.*, --.*/    then line = line.split(/(^-|,\s--|\s)/);  @known_options << Option.new(line[4], line[2])
-                    when /^--.*, -.*/    then line = line.split(/(--|,\s-|\s)/);   @known_options << Option.new(line[2], line[4])
-                    when /^--.*=.*/      then line = line.split(/(--|=|\s)/);      @known_options << Option.new(line[2], nil, false)
-                    when /^--.* .*/      then line = line.split(/(--|\s)/);        @known_options << Option.new(line[2], nil)
+                when /^-h, --help.*/ then next
+                when /^--help, -h.*/ then next
+                when /^-.*, --.*/    then line = line.split(/(^-|,\s--|\s)/);  @known_options << Option.new(line[4], line[2])
+                when /^--.*, -.*/    then line = line.split(/(--|,\s-|\s)/);   @known_options << Option.new(line[2], line[4])
+                when /^--.*=.*/      then line = line.split(/(--|=|\s)/);      @known_options << Option.new(line[2], nil, false)
+                when /^--.* .*/      then line = line.split(/(--|\s)/);        @known_options << Option.new(line[2], nil)
                 end
             end
 
@@ -202,14 +202,14 @@ module EasyOptions
                 else
                     puts @documentation
                 end
-                exit -1
+                exit(-1)
             end
 
             # Regular arguments
             next_is_value = false
             raw_arguments.each do |argument|
                 if argument.start_with?('-')
-                    known_option = @known_options.find { |known_option| known_option.in?(argument) }
+                    known_option = @known_options.find { |option| option.in?(argument) }
                     next_is_value = (known_option && !known_option.boolean)
                 else
                     arguments << argument unless next_is_value
@@ -218,14 +218,13 @@ module EasyOptions
             end
 
             # Bash support
-            if BashOutput
-                @options.keys.each do |name|
-                    puts "#{name}=\"#{@options[name].to_s.sub('true', 'yes')}\""
-                end
-                puts 'unset arguments'
-                arguments.each do |argument|
-                    puts "arguments+=(\"#{argument}\")"
-                end
+            return unless BashOutput
+            @options.keys.each do |name|
+                puts "#{name}=\"#{@options[name].to_s.sub('true', 'yes')}\""
+            end
+            puts 'unset arguments'
+            arguments.each do |argument|
+                puts "arguments+=(\"#{argument}\")"
             end
         end
 

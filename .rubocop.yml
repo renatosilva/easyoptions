@@ -1,2 +1,5 @@
 Style/IndentationWidth:
-  Width: 4
+    Width: 4
+
+Metrics/LineLength:
+    Max: 160
