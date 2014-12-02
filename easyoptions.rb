@@ -77,23 +77,26 @@
 ##
 
 module EasyOptions
-
     class Option
-        def initialize(long_version, short_version, boolean=true)
-            raise ArgumentError.new('Long version is mandatory') if not long_version or long_version.length < 2
+        def initialize(long_version, short_version, boolean = true)
+            fail ArgumentError.new('Long version is mandatory') if !long_version || long_version.length < 2
             @short = short_version.to_sym if short_version
             @long = long_version.to_s.gsub('-', '_').to_sym
             @boolean = boolean
         end
+
         def to_s
             "--#{long_dashed}"
         end
+
         def in?(string)
-            string =~ /^--#{long_dashed}$/ or (@short and string =~ /^-#{@short}$/)
+            string =~ /^--#{long_dashed}$/ || (@short && string =~ /^-#{@short}$/)
         end
+
         def in_with_value?(string)
             string =~ /^--#{long_dashed}=.*$/
         end
+
         def long_dashed
             @long.to_s.gsub('_', '-')
         end
@@ -112,7 +115,7 @@ module EasyOptions
 
         def parse_doc
             begin
-                doc = File.readlines($0)
+                doc = File.readlines($PROGRAM_NAME)
             rescue Errno::ENOENT
                 exit false
             end
@@ -122,7 +125,7 @@ module EasyOptions
             doc = doc.map do |line|
                 line.strip!
                 line.sub!(/^## ?/, '')
-                line.gsub!(/@script.name/, File.basename($0))
+                line.gsub!(/@script.name/, File.basename($PROGRAM_NAME))
                 line.gsub(/@#/, '@')
             end
         end
@@ -143,7 +146,7 @@ module EasyOptions
 
             # Format arguments input
             raw_arguments = ARGV.map do |argument|
-                if argument =~ /^-[^-].*$/i then
+                if argument =~ /^-[^-].*$/i
                     argument.split('')[1..-1].map { |char| "-#{char}" }
                 else
                     argument
@@ -156,22 +159,22 @@ module EasyOptions
                 @known_options.each do |known_option|
 
                     # Boolean option
-                    if known_option.in?(argument) and known_option.boolean then
+                    if known_option.in?(argument) && known_option.boolean
                         @options[known_option.long] = true
                         unknown_option = false
                         break
 
                     # Option with value in next parameter
-                    elsif known_option.in?(argument) and not known_option.boolean then
+                    elsif known_option.in?(argument) && !known_option.boolean
                         value = raw_arguments[index + 1]
-                        Parser.finish("you must specify a value for #{known_option}") if not value or value.start_with?('-')
+                        Parser.finish("you must specify a value for #{known_option}") if !value || value.start_with?('-')
                         value = value.to_i if value =~ /^[0-9]+$/
                         @options[known_option.long] = value
                         unknown_option = false
                         break
 
                     # Option with value after equal sign
-                    elsif known_option.in_with_value?(argument) and not known_option.boolean then
+                    elsif known_option.in_with_value?(argument) && !known_option.boolean
                         value = argument.split('=')[1]
                         value = value.to_i if value =~ /^[0-9]+$/
                         @options[known_option.long] = value
@@ -179,19 +182,19 @@ module EasyOptions
                         break
 
                     # Long option with unnecessary value
-                    elsif known_option.in_with_value?(argument) and known_option.boolean then
+                    elsif known_option.in_with_value?(argument) && known_option.boolean
                         value = argument.split('=')[1]
                         Parser.finish("#{known_option} does not accept a value (you specified \"#{value}\")")
                     end
                 end
 
                 # Unrecognized option
-                Parser.finish("unrecognized option \"#{argument}\"") if unknown_option and argument.start_with?('-')
+                Parser.finish("unrecognized option \"#{argument}\"") if unknown_option && argument.start_with?('-')
             end
 
             # Help option
             if @options[:help]
-                if BashOutput then
+                if BashOutput
                     print "printf '"
                     puts @documentation
                     puts "'"
@@ -205,17 +208,17 @@ module EasyOptions
             # Regular arguments
             next_is_value = false
             raw_arguments.each do |argument|
-                if argument.start_with?('-') then
+                if argument.start_with?('-')
                     known_option = @known_options.find { |known_option| known_option.in?(argument) }
-                    next_is_value = (known_option and not known_option.boolean)
+                    next_is_value = (known_option && !known_option.boolean)
                 else
-                    arguments << argument if not next_is_value
+                    arguments << argument unless next_is_value
                     next_is_value = false
                 end
             end
 
             # Bash support
-            if BashOutput then
+            if BashOutput
                 @options.keys.each do |name|
                     puts "#{name}=\"#{@options[name].to_s.sub('true', 'yes')}\""
                 end
@@ -234,8 +237,8 @@ module EasyOptions
         end
 
         def self.check_bash_output
-            $0 = ENV['from'] || $0
-            $0 == ENV['from']
+            $0 = ENV['from'] || $PROGRAM_NAME
+            $PROGRAM_NAME == ENV['from']
         end
 
         BashOutput = check_bash_output
@@ -250,15 +253,19 @@ module EasyOptions
         def options
             @@parser.options
         end
+
         def arguments
             @@parser.arguments
         end
+
         def documentation
             @@parser.documentation
         end
+
         def all
             [options, arguments, documentation]
         end
+
         def finish(error)
             Parser.finish(error)
         end

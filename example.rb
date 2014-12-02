@@ -31,7 +31,7 @@ puts 'Option specified: --some-boolean' if options[:some_boolean]
 # Parameter option
 value = options[:some_value]
 if value
-    type = value.is_a?(Fixnum)? 'number' : 'string'
+    type = value.is_a?(Fixnum) ? 'number' : 'string'
     puts "Option specified: --some-value is #{value} (a #{type})"
 end
 
