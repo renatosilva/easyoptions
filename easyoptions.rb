@@ -76,9 +76,9 @@ module EasyOptions
 
     class Option
         def initialize(long_version, short_version, boolean=true)
-            raise ArgumentError.new("Long version is mandatory") if not long_version or long_version.length < 2
+            raise ArgumentError.new('Long version is mandatory') if not long_version or long_version.length < 2
             @short = short_version.to_sym if short_version
-            @long = long_version.to_s.gsub("-", "_").to_sym
+            @long = long_version.to_s.gsub('-', '_').to_sym
             @boolean = boolean
         end
         def to_s
@@ -91,7 +91,7 @@ module EasyOptions
             string =~ /^--#{long_dashed}=.*$/
         end
         def long_dashed
-            @long.to_s.gsub("_", "-")
+            @long.to_s.gsub('_', '-')
         end
         attr_accessor :short
         attr_accessor :long
@@ -117,9 +117,9 @@ module EasyOptions
             end
             doc = doc.map do |line|
                 line.strip!
-                line.sub!(/^## ?/, "")
+                line.sub!(/^## ?/, '')
                 line.gsub!(/@script.name/, File.basename($0))
-                line.gsub(/@#/, "@")
+                line.gsub(/@#/, '@')
             end
         end
 
@@ -140,7 +140,7 @@ module EasyOptions
             # Format arguments input
             raw_arguments = ARGV.map do |argument|
                 if argument =~ /^-[^-].*$/i then
-                    argument.split("")[1..-1].map { |char| "-#{char}" }
+                    argument.split('')[1..-1].map { |char| "-#{char}" }
                 else
                     argument
                 end
@@ -160,7 +160,7 @@ module EasyOptions
                     # Option with value in next parameter
                     elsif known_option.in?(argument) and not known_option.boolean then
                         value = raw_arguments[index + 1]
-                        Parser.finish("you must specify a value for #{known_option}") if not value or value.start_with?("-")
+                        Parser.finish("you must specify a value for #{known_option}") if not value or value.start_with?('-')
                         value = value.to_i if value =~ /^[0-9]+$/
                         @options[known_option.long] = value
                         unknown_option = false
@@ -168,7 +168,7 @@ module EasyOptions
 
                     # Option with value after equal sign
                     elsif known_option.in_with_value?(argument) and not known_option.boolean then
-                        value = argument.split("=")[1]
+                        value = argument.split('=')[1]
                         value = value.to_i if value =~ /^[0-9]+$/
                         @options[known_option.long] = value
                         unknown_option = false
@@ -176,13 +176,13 @@ module EasyOptions
 
                     # Long option with unnecessary value
                     elsif known_option.in_with_value?(argument) and known_option.boolean then
-                        value = argument.split("=")[1]
+                        value = argument.split('=')[1]
                         Parser.finish("#{known_option} does not accept a value (you specified \"#{value}\")")
                     end
                 end
 
                 # Unrecognized option
-                Parser.finish("unrecognized option \"#{argument}\"") if unknown_option and argument.start_with?("-")
+                Parser.finish("unrecognized option \"#{argument}\"") if unknown_option and argument.start_with?('-')
             end
 
             # Help option
@@ -191,7 +191,7 @@ module EasyOptions
                     print "printf '"
                     puts @documentation
                     puts "'"
-                    puts "exit"
+                    puts 'exit'
                 else
                     puts @documentation
                 end
@@ -201,7 +201,7 @@ module EasyOptions
             # Regular arguments
             next_is_value = false
             raw_arguments.each do |argument|
-                if argument.start_with?("-") then
+                if argument.start_with?('-') then
                     known_option = @known_options.find { |known_option| known_option.in?(argument) }
                     next_is_value = (known_option and not known_option.boolean)
                 else
@@ -213,9 +213,9 @@ module EasyOptions
             # Bash support
             if BashOutput then
                 @options.keys.each do |name|
-                    puts "#{name}=\"#{@options[name].to_s.sub("true", "yes")}\""
+                    puts "#{name}=\"#{@options[name].to_s.sub('true', 'yes')}\""
                 end
-                puts "unset arguments"
+                puts 'unset arguments'
                 arguments.each do |argument|
                     puts "arguments+=(\"#{argument}\")"
                 end
@@ -224,14 +224,14 @@ module EasyOptions
 
         def self.finish(error)
             $stderr.puts "Error: #{error}."
-            $stderr.puts "See --help for usage and options."
-            puts "exit 1" if BashOutput
+            $stderr.puts 'See --help for usage and options.'
+            puts 'exit 1' if BashOutput
             exit false
         end
 
         def self.check_bash_output
-            $0 = ENV["from"] || $0
-            $0 == ENV["from"]
+            $0 = ENV['from'] || $0
+            $0 == ENV['from']
         end
 
         BashOutput = check_bash_output
