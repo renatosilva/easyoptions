@@ -24,4 +24,4 @@
 ##
 
 script_dir=$(dirname "$BASH_SOURCE")
-eval "$(PATH="$PATH:/usr/lib/ruby/vendor_ruby:${script_dir}" from="$0" easyoptions.rb "$@" || echo exit 1)"
+eval "$(PATH="$PATH:/usr/lib/ruby/vendor_ruby:${script_dir}/ruby" from="$0" easyoptions.rb "$@" || echo exit 1)"

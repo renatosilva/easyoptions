@@ -20,8 +20,9 @@
 ##                             used instead. Short version is not available in this
 ##                             format.
 
-  source easyoptions    || exit # Ruby implementation
-# source easyoptions.sh || exit # Bash implementation, slower
+  script_dir=$(dirname "$BASH_SOURCE")
+  source "${script_dir}/../easyoptions" || exit # Ruby implementation
+# source "${script_dir}/easyoptions.sh" || exit # Bash implementation, slower
 
 # Boolean and parameter options
 [[ -n "$some_option"  ]] && echo "Option specified: --some-option"
