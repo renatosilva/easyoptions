@@ -229,8 +229,8 @@ module EasyOptions
         end
 
         def self.finish(error)
-            $stderr.puts "Error: #{error}."
-            $stderr.puts 'See --help for usage and options.'
+            warn "Error: #{error}."
+            warn 'See --help for usage and options.'
             puts 'exit 1' if BashOutput
             exit false
         end
