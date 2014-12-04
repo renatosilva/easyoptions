@@ -25,7 +25,7 @@ require_relative 'easyoptions'
 options, arguments = EasyOptions.all
 
 # Boolean options
-puts 'Option specified: --some-option'  if options[:option]
+puts 'Option specified: --some-option'  if options[:some_option]
 puts 'Option specified: --some-boolean' if options[:some_boolean]
 
 # Parameter option
