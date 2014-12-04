@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##
-##     EasyOptions Bash Front End 2014.12.2
+##     EasyOptions Bash Front End 2014.12.4
 ##     Copyright (c) 2014 Renato Silva
 ##     GNU GPLv2 licensed
 ##
@@ -24,4 +24,4 @@
 ##
 
 script_dir=$(dirname "$BASH_SOURCE")
-eval "$(PATH="$PATH:/usr/lib/ruby/vendor_ruby:${script_dir}/ruby" from="$0" easyoptions.rb "$@" || echo exit 1)"
+eval "$(PATH="$PATH:${script_dir}:${script_dir}/ruby:/usr/lib/ruby/vendor_ruby" from="$0" easyoptions.rb "$@" || echo exit 1)"
