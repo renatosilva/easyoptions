@@ -3,7 +3,7 @@
 ##
 ##     EasyOptions 2015.2.28
 ##     Copyright (c) 2013, 2014 Renato Silva
-##     GNU GPLv2 licensed
+##     BSD licensed
 ##
 ## This script is supposed to parse command line arguments in a way that,
 ## even though its implementation is not trivial, it should be easy and

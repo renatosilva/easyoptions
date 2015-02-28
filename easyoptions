@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ##
-##     EasyOptions Bash Front End 2014.12.4
+##     EasyOptions Bash Front End 2015.2.28
 ##     Copyright (c) 2014 Renato Silva
-##     GNU GPLv2 licensed
+##     BSD licensed
 ##
 ## This is the Bash front end for EasyOptions. It is just a wrapper to the
 ## default implementation for Bash scripts, which is currently Ruby. The pure

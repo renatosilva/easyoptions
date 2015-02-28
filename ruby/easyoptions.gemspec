@@ -1,7 +1,7 @@
 Gem::Specification.new do |spec|
     spec.name               = 'easyoptions'
-    spec.version            = '2014.12.2'
-    spec.license            = 'GPLv2'
+    spec.version            = '2015.2.28'
+    spec.license            = 'BSD'
     spec.author             = 'Renato Silva'
     spec.email              = 'br.renatosilva@gmail.com'
     spec.summary            = 'Easy option parsing'
