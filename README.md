@@ -99,5 +99,5 @@ The principle behind EasyOptions can be applied in other scripting languages and
 
 ## License and copyright
 
-Copyright (c) 2014 Renato Silva.
+Copyright (c) 2013, 2014 Renato Silva.
 Licensed under the terms of the GNU GPL version 2.

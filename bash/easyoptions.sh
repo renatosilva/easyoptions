@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ##
-##     EasyOptions 2014.9.15
-##     Copyright (c) 2013 Renato Silva
+##     EasyOptions 2015.2.28
+##     Copyright (c) 2013, 2014 Renato Silva
 ##     GNU GPLv2 licensed
 ##
 ## This script is supposed to parse command line arguments in a way that,
