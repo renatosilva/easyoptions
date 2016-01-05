@@ -1,6 +1,6 @@
 # EasyOptions
 
-EasyOptions allows you to write the help text for your program *only once*, and have the described options *automatically parsed* from command line into easily readable variables, *without complicated API*. EasyOptions was development after discontentment with the existing solutions for option parsing in Bash and Ruby. It was conceived with the following guidelines in mind:
+EasyOptions allows you to write the help text for your program *only once*, and have the described options *automatically parsed* from command line into easily readable variables, *without complicated API*. EasyOptions was developed after discontentment with the existing solutions for option parsing in Bash and Ruby. It was conceived with the following guidelines in mind:
 
   * Avoid duplication of source code documentation, help text and options specification.
   * Have the option values parsed into easily readable variables.
