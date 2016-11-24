@@ -55,6 +55,28 @@
 ##     options=(o=option some-boolean some-value=?)
 ##
 
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        SED_REGEX="sed -r"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+        # Mac OSX
+        SED_REGEX="sed -E"
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+        # POSIX compatibility layer and Linux environment emulation for Windows
+        SED_REGEX="sed -r"
+elif [[ "$OSTYPE" == "msys" ]]; then
+        # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+        SED_REGEX="sed -r"
+elif [[ "$OSTYPE" == "win32" ]]; then
+        # I'm not sure this can happen.
+        SED_REGEX="sed -r"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+        # ...
+        SED_REGEX="sed -r"
+else
+        # Unknown.
+        SED_REGEX="sed -r"
+fi
+
 show_error() {
     echo "Error: $1." >&2
     echo "See --help for usage and options." >&2
@@ -62,7 +84,7 @@ show_error() {
 
 parse_documentation() {
     documentation="$(grep "^##" "$(which "$0")")(no-trim)"
-    documentation=$(echo "$documentation" | sed -r "s/## ?//" | sed -r "s/@script.name/$(basename "$0")/g" | sed "s/@#/@/g")
+    documentation=$(echo "$documentation" | $SED_REGEX "s/## ?//" | $SED_REGEX "s/@script.name/$(basename "$0")/g" | sed "s/@#/@/g")
     documentation=${documentation%(no-trim)}
 }
 
