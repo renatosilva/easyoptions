@@ -21,8 +21,9 @@
 ##                             format.
 
   script_dir=$(dirname "$BASH_SOURCE")
-  source "${script_dir}/../easyoptions" || exit # Ruby implementation
-# source "${script_dir}/easyoptions.sh" || exit # Bash implementation, slower
+  easyoptions_include="${script_dir}/some_sourced_lib.sh ${script_dir}/that_other_lib.sh"
+# source "${script_dir}/../easyoptions" || exit # Ruby implementation
+  source "${script_dir}/easyoptions.sh" || exit # Bash implementation, slower
 
 # Boolean and parameter options
 [[ -n "$some_option"  ]] && echo "Option specified: --some-option"
@@ -33,3 +34,9 @@
 for argument in "${arguments[@]}"; do
     echo "Argument specified: $argument"
 done
+
+source "${script_dir}/some_sourced_lib.sh"
+some-lib-feature
+
+source "${script_dir}/that_other_lib.sh"
+that-other-feature
