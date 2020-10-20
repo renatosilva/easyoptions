@@ -21,7 +21,7 @@
 ##                             format.
 
   script_dir=$(dirname "$BASH_SOURCE")
-  easyoptions_include="${script_dir}/some_sourced_lib.sh ${script_dir}/that_other_lib.sh"
+  easyoptions_include=("${script_dir}/some_sourced_lib.sh" "${script_dir}/that_other_lib.sh")
 # source "${script_dir}/../easyoptions" || exit # Ruby implementation
   source "${script_dir}/easyoptions.sh" || exit # Bash implementation, slower
 
